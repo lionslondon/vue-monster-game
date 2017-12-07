@@ -13,18 +13,22 @@ new Vue({
         },
         attack: function(){
 
-            var damage= this.calculateDamage(3, 10);
-            this.monsterHealth -= damage;
+            this.monsterHealth -= this.calculateDamage(3, 10);
 
             if(this.checkWin()){
                 return;
             }
-            damage= this.calculateDamage(5, 12);
-            this.playerHealth -= damage;
 
-          this.checkWin();
+            this.monsterAttacks();
         },
         specialAttack: function(){
+            this.monsterHealth -= this.calculateDamage(10, 20);
+
+            if(this.checkWin()){
+                return;
+            }
+            
+            this.monsterAttacks();
 
         },
         heal: function(){
@@ -33,6 +37,11 @@ new Vue({
         giveUp: function(){
 
         },
+        monsterAttacks: function(){
+
+            this.playerHealth -= this.calculateDamage(5, 12);
+            this.checkWin();
+        }, 
         calculateDamage: function(min, max){
             return Math.max(Math.floor(Math.random() * max)  + 1, min);
         },
